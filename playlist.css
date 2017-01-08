@@ -1,0 +1,11 @@
+.songs, .playlists, .search {
+    display: none;
+}
+
+.active {
+  display: block;
+}
+
+.glyphicon {
+  font-size: 50px; 
+}

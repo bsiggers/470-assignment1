@@ -1,11 +1,42 @@
-.songs, .playlists, .search {
-    display: none;
-}
-
 .active {
   display: block;
 }
 
 .glyphicon {
   font-size: 50px; 
+}
+
+body {
+  position: relative;
+  display: block;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; 
+  display: block;
+  z-index: 1;
+  background-color:#f9f9f9;
+}
+
+.nav-tabs {
+  display: inline-block;  
+}
+
+.nav-item {
+  background-color:#f9f9f9;
+}
+
+.list-group {
+  position: absolute;
+  top: 98px;
+  display: block;
+  overflow: scroll;
+
+}
+
+.list-group-item{
+  background-color: #E8E0F4
 }

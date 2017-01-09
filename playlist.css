@@ -3,7 +3,7 @@
 }
 
 .glyphicon {
-  font-size: 50px; 
+  font-size: 40px; 
 }
 
 body {
@@ -27,6 +27,7 @@ header {
 
 .nav-item {
   background-color:#f9f9f9;
+  color: black;
 }
 
 .list-group {
@@ -38,5 +39,13 @@ header {
 }
 
 .list-group-item{
-  background-color: #E8E0F4
+  background-color: #E8E0F4;
+}
+
+.grey {
+  color: gray;
+}
+
+.black {
+  color: black;
 }

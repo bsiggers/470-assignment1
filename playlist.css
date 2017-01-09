@@ -28,6 +28,8 @@ header {
 .nav-item {
   background-color:#f9f9f9;
   color: black;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .list-group {
@@ -35,11 +37,37 @@ header {
   top: 98px;
   display: block;
   overflow: scroll;
+  width: 100%;
 
 }
 
-.list-group-item{
+.list-group-item, #playlistbutton {
   background-color: #E8E0F4;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: middle;
+  width: 100%;  
+}
+
+.list-group-item > .glyphicon {
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  
+}
+
+#playlistbutton {
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #E8E0F4;  
+}
+
+#playlistbutton > .glyphicon {
+  font-size: 20px;
 }
 
 .grey {
@@ -48,4 +76,16 @@ header {
 
 .black {
   color: black;
+}
+
+.white {
+  color: white;
+}
+
+#greyrectangle {
+  width: 50px;
+  height: 40px;
+  background: grey;
+  display: inline-block;
+  vertical-align: middle;    
 }

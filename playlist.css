@@ -28,9 +28,17 @@ header {
 
 .nav-item {
   background-color:#f9f9f9;
+  padding-left: 15px;
+  padding-right: 15px; 
   color: black;
-  padding-left: 10px;
-  padding-right: 10px; 
+}
+
+.nav-link:active {
+  color: #946fa7;
+}
+
+.nav-link{
+  color: black;
 }
 
 .list-group {
@@ -56,6 +64,27 @@ header {
   width: 100%;  
 }
 
+/* unfortunately unable to get the a:active flag working, tried several ways 
+   but no impact. */
+
+.list-group-item > a:active {
+  color: #946fa7;
+  background-color: #946fa7;
+  outline-color: #946fa7;
+}
+
+.a:active {
+  color: #946fa7;
+  background-color: #946fa7;
+  outline-color: #946fa7;
+}
+
+.a:hover {
+  outline-color: #946fa7;
+  color: #946fa7;
+  background-color: #946fa7;
+}
+
 .list-group-item > .glyphicon {
   font-size: 20px;
   display: inline-block;
@@ -65,10 +94,9 @@ header {
 
 #playlistbutton {
   width: 80%;
-  background-color: black;
+  background-color: #936ac7;
   border-radius: 4px;
   vertical-align: middle;
-  /* display: inline-block; */
   padding-bottom: 4px;
   padding-top: 4px;
 }
@@ -86,10 +114,6 @@ header {
   margin-right: 12px;
 }
 
-.black {
-  color: black;
-}
-
 .white-cross {
   color: white;
 }
@@ -101,7 +125,7 @@ header {
 }
 
 
-#greyrectangle {
+.greyrectangle {
   width: 50px;
   height: 40px;
   background: grey;

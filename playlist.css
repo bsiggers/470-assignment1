@@ -3,7 +3,7 @@
 }
 
 .glyphicon {
-  font-size: 40px; 
+  font-size: 40px;
 }
 
 body {
@@ -15,7 +15,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0; 
+  right: 0;
   display: block;
   z-index: 1;
   background-color:#f9f9f9;
@@ -23,13 +23,13 @@ header {
 }
 
 .nav-tabs {
-  display: inline-block;  
+  display: inline-block;
 }
 
 .nav-item {
   background-color:#f9f9f9;
   padding-left: 15px;
-  padding-right: 15px; 
+  padding-right: 15px;
   color: black;
 }
 
@@ -39,6 +39,10 @@ header {
 
 .nav-link{
   color: black;
+}
+
+.playlistrow {
+  visibility: hidden;
 }
 
 .list-group {
@@ -61,10 +65,10 @@ header {
   margin-left: auto;
   margin-right: auto;
   vertical-align: middle;
-  width: 100%;  
+  width: 100%;
 }
 
-/* unfortunately unable to get the a:active flag working, tried several ways 
+/* unfortunately unable to get the a:active flag working, tried several ways
    but no impact. */
 
 .list-group-item > a:active {
@@ -89,7 +93,7 @@ header {
   font-size: 20px;
   display: inline-block;
   vertical-align: middle;
-  
+
 }
 
 #playlistbutton {
@@ -121,7 +125,7 @@ header {
 .playlistbuttoncontainer {
    background-color: #E8E0F4;
    padding-top: 10px;
-   padding-bottom: 10px; 
+   padding-bottom: 10px;
 }
 
 
@@ -132,6 +136,6 @@ header {
   display: inline-block;
   vertical-align: middle;
   margin-left: 30px;
-  margin-right: 40px; 
-  border-radius: 4px;   
+  margin-right: 40px;
+  border-radius: 4px;
 }

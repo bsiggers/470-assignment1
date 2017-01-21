@@ -75,11 +75,50 @@ var updateplaylistrows = function() {
 }
 
 var sortbyartistclick = function() {
+  window.MUSIC_DATA["songs"].sort(function(a, b) {
+    var nameA = a.artist.toUpperCase();
+    var nameB = b.artist.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
 
+    // names must be equal
+    return 0;
+  });
+
+  clearplaylistrows();
+  updatesonglistrows();
+  changeplaylistrows("visible");
+  document.getElementById("sortbytitlebutton").style["background-color"] = "#946fa7"
+  document.getElementById("sortbyartistbutton").style["box-shadow"] = "inset"
 }
 
 var sortbytitleclick = function() {
 
+
+  window.MUSIC_DATA["songs"].sort(function(a, b) {
+    var nameA = a.title.toUpperCase();
+    var nameB = b.title.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
+
+  clearplaylistrows();
+  updatesonglistrows();
+  changeplaylistrows("visible");
+
+  document.getElementById("sortbyartistbutton").style["background-color"] = "#946fa7"
+  document.getElementById("sortbytitlebutton").style["box-shadow"] = "inset"
 }
 
 var updatesonglistrows = function() {
@@ -89,14 +128,14 @@ var updatesonglistrows = function() {
 
     sortbyartistelement = document.createElement("span")
     sortbyartistelement.setAttribute("class", "playlistrow")
-    sortbyartistelement.innerHTML = '<a href="#" class="btn btn-info" role="button"><span class="glyphicon glyphicon-plus white-cross"></span>Sort by title</a>'
-    sortbyartistelement.addEventListener("click", sortbyartistclick)
+    sortbyartistelement.innerHTML = '<a href="#" id="sortbyartistbutton" class="btn btn-info" role="button">Sort by title</a>'
+    sortbyartistelement.addEventListener("click", sortbytitleclick)
     rowelement.appendChild(sortbyartistelement)
 
     sortbytitleelement = document.createElement("span")
     sortbytitleelement.setAttribute("class", "playlistrow")
-    sortbytitleelement.innerHTML = '<a href="#" class="btn btn-info" role="button"><span class="glyphicon glyphicon-plus white-cross"></span>Sort by artist</a>'
-    sortbytitleelement.addEventListener("click", sortbytitleclick)
+    sortbytitleelement.innerHTML = '<a href="#" id="sortbytitlebutton" class="btn btn-info" role="button">Sort by artist</a>'
+    sortbytitleelement.addEventListener("click", sortbyartistclick)
     rowelement.appendChild(sortbytitleelement)
     playlistcontainer.appendChild(rowelement)
 
@@ -115,7 +154,7 @@ var updatesonglistrows = function() {
 
 var librarytabclick = function() {
   clearplaylistrows();
-  updatesonglistrows();
+  sortbyartistclick();
   changeplaylistrows("visible");
 };
 

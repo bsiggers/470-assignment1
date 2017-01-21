@@ -17,37 +17,33 @@ function removeElementsByClass(className){
     }
 }
 
-var librarytabclick = function() {
-  changeplaylistrows("hidden");
-};
 
 
-var getsong = function(id) {
+
+var getsong = function(songid) {
   var datarows = window.MUSIC_DATA["songs"]
-  for (i=0;i<datarows.length;i++)
+  for (let song of datarows)
   {
-    if (datarows[i]["id"] == id) {
-      return datarows[i]
+    if (song["id"] == songid) {
+      return song
     }
   }
 }
 
 var updateplaylistsonglist = function(playlistname, playlistsongs) {
   var playlistcontainer = document.getElementById("playlistbuttoncontainer")
-
   var rowelement = document.createElement("div")
   rowelement.setAttribute("class", "playlistrow row")
-  rowelement.innerHTML = '<h1>'+playlistname+'</h1>'
+  rowelement.innerHTML = '<h2>'+playlistname+'</h2>'
   playlistcontainer.appendChild(rowelement)
-
-  for (i=0;i<playlistsongs.length;i++)
+  for (let id of playlistsongs)
   {
     var rowelement = document.createElement("div")
     rowelement.setAttribute("class", "playlistrow row")
-    song = getsong(playlistsongs[i])
-    rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
+    song = getsong(id)
+    rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<br>'+song["artist"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
     //rowelement.addEventListener("click", playlistrowclick)
-    rowelement.setAttribute("song", song)
+    rowelement.setAttribute("songid", id)
     playlistcontainer.appendChild(rowelement)
   }
 }
@@ -57,7 +53,6 @@ var clearplaylistrows = function() {
 }
 
 var playlistrowclick = function() {
-  debugger;
   clearplaylistrows();
   updateplaylistsonglist(this.getAttribute("playlistname"), this.getAttribute("playlistsongs").split(','));
   changeplaylistrows("visible");
@@ -78,6 +73,51 @@ var updateplaylistrows = function() {
     playlistcontainer.appendChild(rowelement)
   }
 }
+
+var sortbyartistclick = function() {
+
+}
+
+var sortbytitleclick = function() {
+
+}
+
+var updatesonglistrows = function() {
+    var playlistcontainer = document.getElementById("playlistbuttoncontainer")
+    var rowelement = document.createElement("div")
+    rowelement.setAttribute("class", "playlistrow row center-block")
+
+    sortbyartistelement = document.createElement("span")
+    sortbyartistelement.setAttribute("class", "playlistrow")
+    sortbyartistelement.innerHTML = '<a href="#" class="btn btn-info" role="button"><span class="glyphicon glyphicon-plus white-cross"></span>Sort by title</a>'
+    sortbyartistelement.addEventListener("click", sortbyartistclick)
+    rowelement.appendChild(sortbyartistelement)
+
+    sortbytitleelement = document.createElement("span")
+    sortbytitleelement.setAttribute("class", "playlistrow")
+    sortbytitleelement.innerHTML = '<a href="#" class="btn btn-info" role="button"><span class="glyphicon glyphicon-plus white-cross"></span>Sort by artist</a>'
+    sortbytitleelement.addEventListener("click", sortbytitleclick)
+    rowelement.appendChild(sortbytitleelement)
+    playlistcontainer.appendChild(rowelement)
+
+    var datarows = window.MUSIC_DATA["songs"]
+    for (let song of datarows)
+    {
+      var rowelement = document.createElement("div")
+      rowelement.setAttribute("class", "playlistrow row")
+      rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<br>'+song["artist"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
+      //rowelement.addEventListener("click", playlistrowclick)
+      rowelement.setAttribute("songid", song["id"])
+      playlistcontainer.appendChild(rowelement)
+    }
+}
+
+
+var librarytabclick = function() {
+  clearplaylistrows();
+  updatesonglistrows();
+  changeplaylistrows("visible");
+};
 
 var playlisttabclick = function() {
   clearplaylistrows();

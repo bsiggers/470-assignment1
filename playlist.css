@@ -165,7 +165,9 @@ header {
     position: fixed;
     top: 20%;
     bottom: 20%;
-    background-color: #E8E0F4;
+    left: 10%;
+    right: 10%;
+    background-color: white;
     width: 80%;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
@@ -177,8 +179,14 @@ header {
 .close {
     color: white;
     float: right;
-    font-size: 28px;
+    font-size: 12px;
     font-weight: bold;
+}
+
+.h2 {
+  color: white;
+  float: left;
+  font-size: 12px;
 }
 
 .close:hover,
@@ -195,12 +203,6 @@ header {
 }
 
 .modal-body {padding: 2px 16px;}
-
-.modal-footer {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-}
 
 @-webkit-keyframes slideIn {
     from {bottom: -300px; opacity: 0}

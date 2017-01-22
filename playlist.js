@@ -116,6 +116,21 @@ var sortbytitleclick = function() {
   document.getElementById("sortbytitlebutton").style["box-shadow"] = "inset"
 }
 
+var addsongtoplaylist = function(playlistid, songid) {
+  for (let playlist of window.MUSIC_DATA["playlists"]) {
+    if (playlist.id =- playlistid)
+    {
+      playlist.songs.push(songid)
+    }
+  }
+}
+
+var playlistaddclick = function() {
+  addsongtoplaylist(this.getAttribute("playlistid"), this.getAttribute("songid"));
+  var modal = document.getElementById('myModal');
+  modal.style.display = "none";
+}
+
 var songrowclick = function() {
   var songid = this.getAttribute("songid")
   var modal = document.getElementById('myModal');
@@ -126,20 +141,17 @@ var songrowclick = function() {
   }
   var modalcontent = document.getElementById('modalcontent');
   var datarows = window.MUSIC_DATA["playlists"]
-  for (i=0; i<datarows.length; i++)
+  for (let playlist of datarows)
   {
     var rowelement = document.createElement("div")
-    rowelement.setAttribute("class", "playlistrow row")
-    rowelement.innerHTML = '<a href="#" class="list-group-item">'+datarows[i]["name"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
-    rowelement.addEventListener("click", playlistrowclick)
-    rowelement.setAttribute("playlistname",  datarows[i]["name"])
-    rowelement.setAttribute("playlistindex", datarows[i]["id"])
-    rowelement.setAttribute("playlistsongs", datarows[i]["songs"])
+    rowelement.setAttribute("class", "row")
+    rowelement.innerHTML = '<a href="#">'+playlist["name"]+'<span class="glyphicon glyphicon-plus-sign"></span></a>'
+    rowelement.addEventListener("click", playlistaddclick)
+    rowelement.setAttribute("playlistname",  playlist["name"])
+    rowelement.setAttribute("playlistid", playlist["id"])
+    rowelement.setAttribute("songid", songid)
     modalcontent.appendChild(rowelement)
   }
-
-
-
 }
 
 var updatesonglistrows = function() {

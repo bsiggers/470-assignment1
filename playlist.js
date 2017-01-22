@@ -116,6 +116,32 @@ var sortbytitleclick = function() {
   document.getElementById("sortbytitlebutton").style["box-shadow"] = "inset"
 }
 
+var songrowclick = function() {
+  var songid = this.getAttribute("songid")
+  var modal = document.getElementById('myModal');
+  modal.style.display = "block";
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+      modal.style.display = "none";
+  }
+  var modalcontent = document.getElementById('modalcontent');
+  var datarows = window.MUSIC_DATA["playlists"]
+  for (i=0; i<datarows.length; i++)
+  {
+    var rowelement = document.createElement("div")
+    rowelement.setAttribute("class", "playlistrow row")
+    rowelement.innerHTML = '<a href="#" class="list-group-item">'+datarows[i]["name"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
+    rowelement.addEventListener("click", playlistrowclick)
+    rowelement.setAttribute("playlistname",  datarows[i]["name"])
+    rowelement.setAttribute("playlistindex", datarows[i]["id"])
+    rowelement.setAttribute("playlistsongs", datarows[i]["songs"])
+    modalcontent.appendChild(rowelement)
+  }
+
+
+
+}
+
 var updatesonglistrows = function() {
     var playlistcontainer = document.getElementById("playlistbuttoncontainer")
     var rowelement = document.createElement("div")
@@ -138,9 +164,9 @@ var updatesonglistrows = function() {
     for (let song of datarows)
     {
       var rowelement = document.createElement("div")
-      rowelement.setAttribute("class", "playlistrow row")
-      rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<br>'+song["artist"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
-      //rowelement.addEventListener("click", playlistrowclick)
+      rowelement.setAttribute("class", "playlistrow row ")
+      rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<span class="glyphicon glyphicon-play"></span><span class="glyphicon glyphicon-plus-sign"></span><br>'+song["artist"]+'</a>'
+      rowelement.addEventListener("click", songrowclick)
       rowelement.setAttribute("songid", song["id"])
       playlistcontainer.appendChild(rowelement)
     }
@@ -169,4 +195,12 @@ var initializeHandlers = function() {
   document.getElementById("searchtab").addEventListener("click", searchtabclick);
 };
 
+var hidemodal = function(event) {
+  var modal = document.getElementById('myModal');
+  if (event.target == modal) {
+      modal.style.display = "none";
+  }
+}
+
 window.addEventListener("load", initializeHandlers);
+window.addEventListener("click", hidemodal);

@@ -76,16 +76,15 @@ var updateplaylistrows = function() {
 
 var sortbyartistclick = function() {
   window.MUSIC_DATA["songs"].sort(function(a, b) {
-    var nameA = a.artist.toUpperCase();
-    var nameB = b.artist.toUpperCase();
+
+    var nameA = a.artist.toUpperCase().replace(/^(THE )/,"");
+    var nameB = b.artist.toUpperCase().replace(/^(THE )/,"");
     if (nameA < nameB) {
       return -1;
     }
     if (nameA > nameB) {
       return 1;
     }
-
-    // names must be equal
     return 0;
   });
 
@@ -97,8 +96,6 @@ var sortbyartistclick = function() {
 }
 
 var sortbytitleclick = function() {
-
-
   window.MUSIC_DATA["songs"].sort(function(a, b) {
     var nameA = a.title.toUpperCase();
     var nameB = b.title.toUpperCase();
@@ -108,8 +105,6 @@ var sortbytitleclick = function() {
     if (nameA > nameB) {
       return 1;
     }
-
-    // names must be equal
     return 0;
   });
 

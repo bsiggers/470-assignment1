@@ -1,6 +1,11 @@
 
 
-
+var hidemodal = function(event) {
+  var modal = document.getElementById('myModal');
+  if (event.target == modal) {
+      modal.style.display = "none";
+  }
+}
 
 var changeplaylistrows = function(visibility) {
   var playlistrows = document.getElementsByClassName("playlistrow")
@@ -17,9 +22,6 @@ function removeElementsByClass(className){
     }
 }
 
-
-
-
 var getsong = function(songid) {
   var datarows = window.MUSIC_DATA["songs"]
   for (let song of datarows)
@@ -30,7 +32,22 @@ var getsong = function(songid) {
   }
 }
 
-var updateplaylistsonglist = function(playlistname, playlistsongs) {
+var addsongtoplaylist = function(playlistid, songid) {
+  for (let playlist of window.MUSIC_DATA["playlists"]) {
+    if (playlist.id =- playlistid)
+    {
+      playlist.songs.push(songid)
+    }
+  }
+}
+
+var playlistaddclick = function() {
+  addsongtoplaylist(this.getAttribute("playlistid"), this.getAttribute("songid"));
+  var modal = document.getElementById('myModal');
+  modal.style.display = "none";
+}
+
+var updateplaylistsonglist = function(playlistname, playlistid, playlistsongs) {
   var playlistcontainer = document.getElementById("playlistbuttoncontainer")
   var rowelement = document.createElement("div")
   rowelement.setAttribute("class", "playlistrow row")
@@ -41,8 +58,10 @@ var updateplaylistsonglist = function(playlistname, playlistsongs) {
     var rowelement = document.createElement("div")
     rowelement.setAttribute("class", "playlistrow row")
     song = getsong(id)
-    rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<br>'+song["artist"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
-    //rowelement.addEventListener("click", playlistrowclick)
+    rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<span class="glyphicon glyphicon-play grey-icon"></span><span class="glyphicon glyphicon-plus-sign grey-icon"></span><br>'+song["artist"]+'</a>'
+    rowelement.addEventListener("click", songrowclick)
+    rowelement.setAttribute("playlistname",  playlistname)
+    rowelement.setAttribute("playlistid", playlistid)
     rowelement.setAttribute("songid", id)
     playlistcontainer.appendChild(rowelement)
   }
@@ -54,7 +73,7 @@ var clearplaylistrows = function() {
 
 var playlistrowclick = function() {
   clearplaylistrows();
-  updateplaylistsonglist(this.getAttribute("playlistname"), this.getAttribute("playlistsongs").split(','));
+  updateplaylistsonglist(this.getAttribute("playlistname"), this.getAttribute("playlistindex"), this.getAttribute("playlistsongs").split(','));
   changeplaylistrows("visible");
 }
 
@@ -65,7 +84,7 @@ var updateplaylistrows = function() {
   {
     var rowelement = document.createElement("div")
     rowelement.setAttribute("class", "playlistrow row")
-    rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+datarows[i]["name"]+'<span class="glyphicon glyphicon-chevron-right grey-chevron"></span></a>'
+    rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+datarows[i]["name"]+'<span class="glyphicon glyphicon-chevron-right grey-icon"></span></a>'
     rowelement.addEventListener("click", playlistrowclick)
     rowelement.setAttribute("playlistname",  datarows[i]["name"])
     rowelement.setAttribute("playlistindex", datarows[i]["id"])
@@ -116,21 +135,6 @@ var sortbytitleclick = function() {
   document.getElementById("sortbytitlebutton").style["box-shadow"] = "inset"
 }
 
-var addsongtoplaylist = function(playlistid, songid) {
-  for (let playlist of window.MUSIC_DATA["playlists"]) {
-    if (playlist.id =- playlistid)
-    {
-      playlist.songs.push(songid)
-    }
-  }
-}
-
-var playlistaddclick = function() {
-  addsongtoplaylist(this.getAttribute("playlistid"), this.getAttribute("songid"));
-  var modal = document.getElementById('myModal');
-  modal.style.display = "none";
-}
-
 var songrowclick = function() {
   var songid = this.getAttribute("songid")
   var modal = document.getElementById('myModal');
@@ -145,7 +149,7 @@ var songrowclick = function() {
   {
     var rowelement = document.createElement("div")
     rowelement.setAttribute("class", "row")
-    rowelement.innerHTML = '<a href="#">'+playlist["name"]+'<span class="glyphicon glyphicon-plus-sign"></span></a>'
+    rowelement.innerHTML = '<a href="#">'+playlist["name"]+'<span class="glyphicon glyphicon-plus-sign grey-icon"></span></a>'
     rowelement.addEventListener("click", playlistaddclick)
     rowelement.setAttribute("playlistname",  playlist["name"])
     rowelement.setAttribute("playlistid", playlist["id"])
@@ -177,13 +181,70 @@ var updatesonglistrows = function() {
     {
       var rowelement = document.createElement("div")
       rowelement.setAttribute("class", "playlistrow row ")
-      rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<span class="glyphicon glyphicon-play"></span><span class="glyphicon glyphicon-plus-sign"></span><br>'+song["artist"]+'</a>'
+      rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<span class="glyphicon glyphicon-play grey-icon"></span><span class="glyphicon glyphicon-plus-sign grey-icon"></span><br>'+song["artist"]+'</a>'
       rowelement.addEventListener("click", songrowclick)
       rowelement.setAttribute("songid", song["id"])
       playlistcontainer.appendChild(rowelement)
     }
 }
 
+var clearsearch = function() {
+  var search = document.getElementById("search-input")
+  search.value = ""
+}
+
+var updatesearchresult = function() {
+    removeElementsByClass("search-result");
+    var playlistcontainer = document.getElementById("playlistbuttoncontainer")
+    var searchstring = document.getElementById("search-input").value
+    // playlists
+
+
+    var datarows = window.MUSIC_DATA["playlists"]
+    for (let playlist of datarows)
+    {
+      if (playlist.name.includes(searchstring))
+      {
+        var rowelement = document.createElement("div")
+        rowelement.setAttribute("class", "playlistrow row")
+        rowelement.setAttribute("class", "playlistrow row search-result")
+        rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+playlist.name+'<span class="glyphicon glyphicon-chevron-right grey-icon"></span></a>'        
+        rowelement.addEventListener("click", playlistrowclick)
+        rowelement.setAttribute("playlistname",  playlist.name)
+        rowelement.setAttribute("playlistindex", playlist.id)
+        rowelement.setAttribute("playlistsongs", playlist.songs)
+        playlistcontainer.appendChild(rowelement)
+      }
+    }
+    // songs
+    var datarows = window.MUSIC_DATA["songs"]
+    for (let song of datarows)
+    {
+      if (song.title.includes(searchstring) || song.artist.includes(searchstring))
+      {
+        var rowelement = document.createElement("div")
+        rowelement.setAttribute("class", "playlistrow row search-result")
+        rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+song["title"]+' / '+song["album"]+'<span class="glyphicon glyphicon-play grey-icon"></span><span class="glyphicon glyphicon-plus-sign grey-icon"></span><br>'+song["artist"]+'</a>'
+        rowelement.addEventListener("click", songrowclick)
+        rowelement.setAttribute("songid", song["id"])
+        playlistcontainer.appendChild(rowelement)
+      }
+    }
+    changeplaylistrows("visible");
+}
+
+var updatesearchrows = function() {
+  var playlistcontainer = document.getElementById("playlistbuttoncontainer")
+  var search = document.createElement("div")
+  search.setAttribute("class", "playlistrow row center-block form-group")
+  search.innerHTML = '<input class="form-control" type="search" value="search" id="search-input">'
+  search.addEventListener("click", clearsearch)
+  search.addEventListener("keyup", updatesearchresult)
+  playlistcontainer.appendChild(search)
+
+
+
+}
 
 var librarytabclick = function() {
   clearplaylistrows();
@@ -198,7 +259,10 @@ var playlisttabclick = function() {
 };
 
 var searchtabclick = function() {
-  changeplaylistrows("hidden");
+  clearplaylistrows();
+  removeElementsByClass("search-result");
+  updatesearchrows();
+  changeplaylistrows("visible")
 };
 
 var initializeHandlers = function() {
@@ -206,13 +270,6 @@ var initializeHandlers = function() {
   document.getElementById("playlisttab").addEventListener("click", playlisttabclick);
   document.getElementById("searchtab").addEventListener("click", searchtabclick);
 };
-
-var hidemodal = function(event) {
-  var modal = document.getElementById('myModal');
-  if (event.target == modal) {
-      modal.style.display = "none";
-  }
-}
 
 window.addEventListener("load", initializeHandlers);
 window.addEventListener("click", hidemodal);

@@ -143,12 +143,14 @@ var songrowclick = function() {
   span.onclick = function() {
       modal.style.display = "none";
   }
+  removeElementsByClass("modal-row")  
+
   var modalcontent = document.getElementById('modalcontent');
   var datarows = window.MUSIC_DATA["playlists"]
   for (let playlist of datarows)
   {
     var rowelement = document.createElement("div")
-    rowelement.setAttribute("class", "row")
+    rowelement.setAttribute("class", "row modal-row")
     rowelement.innerHTML = '<a href="#">'+playlist["name"]+'<span class="glyphicon glyphicon-plus-sign grey-icon"></span></a>'
     rowelement.addEventListener("click", playlistaddclick)
     rowelement.setAttribute("playlistname",  playlist["name"])
@@ -198,8 +200,6 @@ var updatesearchresult = function() {
     var playlistcontainer = document.getElementById("playlistbuttoncontainer")
     var searchstring = document.getElementById("search-input").value
     // playlists
-
-
     var datarows = window.MUSIC_DATA["playlists"]
     for (let playlist of datarows)
     {
@@ -208,7 +208,7 @@ var updatesearchresult = function() {
         var rowelement = document.createElement("div")
         rowelement.setAttribute("class", "playlistrow row")
         rowelement.setAttribute("class", "playlistrow row search-result")
-        rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+playlist.name+'<span class="glyphicon glyphicon-chevron-right grey-icon"></span></a>'        
+        rowelement.innerHTML = '<a href="#" class="list-group-item"><span class="greyrectangle"></span>'+playlist.name+'<span class="glyphicon glyphicon-chevron-right grey-icon"></span></a>'
         rowelement.addEventListener("click", playlistrowclick)
         rowelement.setAttribute("playlistname",  playlist.name)
         rowelement.setAttribute("playlistindex", playlist.id)
@@ -241,9 +241,6 @@ var updatesearchrows = function() {
   search.addEventListener("click", clearsearch)
   search.addEventListener("keyup", updatesearchresult)
   playlistcontainer.appendChild(search)
-
-
-
 }
 
 var librarytabclick = function() {
